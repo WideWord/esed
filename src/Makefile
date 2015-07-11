@@ -1,8 +1,21 @@
 
 SRC_FILES = $(wildcard *.c)
+OBJ_FILES = $(SRC_FILES:%.c=../obj/%.o)
 
-all: ../bin/esed
+all: dirs ../bin/esed
 
-../bin/esed: $(SRC_FILES)
-	gcc $< -o $@
+dirs:
+	@mkdir -p ../obj
+
+../bin/esed: $(OBJ_FILES)
+	@echo Linking esed...
+	@gcc $< -o $@
 	
+$(OBJ_FILES): ../obj/%.o: %.c
+	@echo Compiling $<...
+	@gcc $< -c -o $@
+
+clean:
+	@echo Cleaning...
+	@rm -rf ../obj
+	@rm ../bin/esed
