@@ -9,7 +9,7 @@ dirs:
 
 ../bin/esed: $(OBJ_FILES)
 	@echo Linking esed...
-	@gcc $< -o $@
+	@gcc $(OBJ_FILES) -o $@
 	
 $(OBJ_FILES): ../obj/%.o: %.c
 	@echo Compiling $<...
