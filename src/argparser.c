@@ -3,6 +3,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define ESED_ARGS_GET_STRING(Var, ErrorMsg) \
+	++i; \
+	if (i == argc) { \
+		fprintf(stderr, ErrorMsg); \
+		exit(1); \
+	} \
+	Var = argv[i];
+
+#define ESED_ARGS_GET_INT(Var, ErrorMsg) \
+	++i; \
+	if (i == argc) { \
+		fprintf(stderr, ErrorMsg); \
+		exit(1); \
+	} \
+	Var = atoi(argv[i]);
+
+#define ESED_ARGS_COMMAND_GUARD \
+	if (args->command != NULL) { \
+		fprintf(stderr, "You can specify only one command\n"); \
+		exit(1); \
+	}
+
 esedArgs * esedParseArgs(int argc, char ** argv) {
 
 	esedArgs * args = malloc(sizeof(esedArgs));
@@ -12,37 +34,13 @@ esedArgs * esedParseArgs(int argc, char ** argv) {
 
 	for (int i = 1; i < argc; ++i) {
 		if (strcmp(argv[i], "-i") == 0) {
-			++i;
-			if (i == argc) {
-				fprintf(stderr, "Invalid args: file name expected after -i\n");
-				exit(1);
-			}
-			args->inputFile = argv[i];
+			ESED_ARGS_GET_STRING(args->inputFile, "Invalid args: file name expected after -i\n");
 		} else if (strcmp(argv[i], "-o") == 0) {
-			++i;
-			if (i == argc) {
-				fprintf(stderr, "Invalid args: file name expected after -o\n");
-				exit(1);
-			}
-			args->outputFile = argv[i];
+			ESED_ARGS_GET_STRING(args->outputFile, "Invalid args: file name expected after -o\n");
 		} else if (strcmp(argv[i], "--replace") == 0) {
-			if (args->command != NULL) {
-				fprintf(stderr, "You can specify only one command\n");
-				exit(1);
-			}
-
-			++i;
-			if (i == argc) {
-				fprintf(stderr, "Invalid args: from to expected after --replace\n");
-				exit(1);
-			}
-			const char * from = argv[i];
-			++i;
-			if (i == argc) {
-				fprintf(stderr, "Invalid args: from to expected after --replace\n");
-				exit(1);
-			}
-			const char * to = argv[i];
+			ESED_ARGS_COMMAND_GUARD
+			ESED_ARGS_GET_STRING(const char * from, "Invalid args: from to expected after --replace\n");
+			ESED_ARGS_GET_STRING(const char * to, "Invalid args: from to expected after --replace\n");
 
 			esedReplaceCommand * command = malloc(sizeof(esedReplaceCommand));
 			command->from = from;
@@ -51,24 +49,9 @@ esedArgs * esedParseArgs(int argc, char ** argv) {
 
 			args->command = (esedCommand *)command;
 		} else if (strcmp(argv[i], "--insert") == 0) {
-			if (args->command != NULL) {
-				fprintf(stderr, "You can specify only one command\n");
-				exit(1);
-			}
-
-			++i;
-			if (i == argc) {
-				fprintf(stderr, "Invalid args: line number and string expected after --insert\n");
-				exit(1);
-			}
-			const char * lineNumStr = argv[i];
-			int lineNumber = atoi(lineNumStr);
-			++i;
-			if (i == argc) {
-				fprintf(stderr, "Invalid args: line number and string expected after --insert\n");
-				exit(1);
-			}
-			const char * string = argv[i];
+			ESED_ARGS_COMMAND_GUARD
+			ESED_ARGS_GET_INT(int lineNumber, "Invalid args: line number and string expected after --insert\n");
+			ESED_ARGS_GET_STRING(const char * string, "Invalid args: line number and string expected after --insert\n")
 
 			esedInsertLineCommand * command = malloc(sizeof(esedInsertLineCommand));
 			command->lineNumber = lineNumber;
@@ -77,18 +60,8 @@ esedArgs * esedParseArgs(int argc, char ** argv) {
 
 			args->command = (esedCommand *)command;
 		} else if (strcmp(argv[i], "--remove") == 0) {
-			if (args->command != NULL) {
-				fprintf(stderr, "You can specify only one command\n");
-				exit(1);
-			}
-
-			++i;
-			if (i == argc) {
-				fprintf(stderr, "Invalid args: line number expected after --remove\n");
-				exit(1);
-			}
-			const char * lineNumStr = argv[i];
-			int lineNumber = atoi(lineNumStr);
+			ESED_ARGS_COMMAND_GUARD
+			ESED_ARGS_GET_INT(int lineNumber, "Invalid args: line number expected after --remove\n");
 
 			esedRemoveLineCommand * command = malloc(sizeof(esedRemoveLineCommand));
 			command->lineNumber = lineNumber;
@@ -96,24 +69,9 @@ esedArgs * esedParseArgs(int argc, char ** argv) {
 
 			args->command = (esedCommand *)command;
 		} else if (strcmp(argv[i], "--insert-above") == 0) {
-			if (args->command != NULL) {
-				fprintf(stderr, "You can specify only one command\n");
-				exit(1);
-			}
-
-			++i;
-			if (i == argc) {
-				fprintf(stderr, "Invalid args: pattern and string expected after --insert-above\n");
-				exit(1);
-			}
-			const char * pattern = argv[i];
-
-			++i;
-			if (i == argc) {
-				fprintf(stderr, "Invalid args: pattern and string expected after --insert-above\n");
-				exit(1);
-			}
-			const char * string = argv[i];
+			ESED_ARGS_COMMAND_GUARD
+			ESED_ARGS_GET_STRING(const char * pattern, "Invalid args: pattern and string expected after --insert-above\n");
+			ESED_ARGS_GET_STRING(const char * string, "Invalid args: pattern and string expected after --insert-above\n");
 
 			esedInsertLineNearPatternCommand * command = malloc(sizeof(esedInsertLineNearPatternCommand));
 			command->pattern = pattern;
@@ -123,24 +81,9 @@ esedArgs * esedParseArgs(int argc, char ** argv) {
 
 			args->command = (esedCommand *)command;
 		} else if (strcmp(argv[i], "--insert-below") == 0) {
-			if (args->command != NULL) {
-				fprintf(stderr, "You can specify only one command\n");
-				exit(1);
-			}
-
-			++i;
-			if (i == argc) {
-				fprintf(stderr, "Invalid args: pattern and string expected after --insert-below\n");
-				exit(1);
-			}
-			const char * pattern = argv[i];
-
-			++i;
-			if (i == argc) {
-				fprintf(stderr, "Invalid args: pattern and string expected after --insert-below\n");
-				exit(1);
-			}
-			const char * string = argv[i];
+			ESED_ARGS_COMMAND_GUARD
+			ESED_ARGS_GET_STRING(const char * pattern, "Invalid args: pattern and string expected after --insert-below\n");
+			ESED_ARGS_GET_STRING(const char * string, "Invalid args: pattern and string expected after --insert-below\n");
 
 			esedInsertLineNearPatternCommand * command = malloc(sizeof(esedInsertLineNearPatternCommand));
 			command->pattern = pattern;
