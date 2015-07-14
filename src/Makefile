@@ -19,3 +19,6 @@ clean:
 	@echo Cleaning...
 	@rm -rf ../obj
 	@rm ../bin/esed
+
+install: ../bin/esed
+	@cp ../bin/esed /usr/local/bin
