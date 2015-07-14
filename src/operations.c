@@ -37,34 +37,32 @@ void esedInsertLine(FILE * in, FILE * out, esedInsertLineCommand * cmd) {
 void esedRemoveLine(FILE * in, FILE * out, esedRemoveLineCommand * cmd) {
 	//fprintf(stderr, "Remove operation not implemented, lineNumber = '%d'\n", cmd->lineNumber);
  	
-	char element;
+	char buffer[512];
+	int lineCtr = 1;
+	int lineToRemove = cmd->lineNumber;
 
-	//we go until extracting line
-	fprintf(stderr,"#1");
-	for (int i=0; i!=cmd->lineNumber-1; i++)
-	{
-		fgets (&element, 1, in);
-		for (int number_of_element=0; element!='\n'; number_of_element++)
-			fprintf (out, "%c", element);
-			fgets (&element, 1, in);
-		fprintf (out, "\n");
+	for (;;) {
+		size_t readedSize = fread(buffer, 1, sizeof(buffer), in);
+
+		if (readedSize == 0) break;
+
+		int lineBegin = 0;
+
+		for (int i = 0; i < readedSize; ++i) {
+			if (buffer[i] == '\n') {
+				if (lineCtr != lineToRemove) {
+					fwrite(buffer + lineBegin, 1, i - lineBegin + 1, out);
+				}
+				lineBegin = i + 1;
+				lineCtr++;
+			}
+		}
+
+		if (lineBegin != readedSize && lineCtr != lineToRemove) {
+			fwrite(buffer + lineBegin, 1, readedSize - lineBegin, out);
+		}
+
 	}
-
-	//we "miss" extracting line
-	fprintf(stderr,"#2");
-	fgets (&element, 1, in);
-	for (int number_of_element=0; element!='\n'; number_of_element++)
-		fgets (&element, 1, in);
-
-	//we go until EOF
-	fprintf(stderr,"#3");
-	fgets (&element, 1, in);
-	while (element!=EOF)
-	{
-		fprintf (out, "%c", element);
-		fgets (&element, 1, in);
-	}
-	fprintf(stderr,"#4");
 }
 
 void esedInsertLineNearPattern(FILE * in, FILE * out, esedInsertLineNearPatternCommand * cmd) {
