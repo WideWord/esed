@@ -3,10 +3,15 @@
 #include "argparser.h"
 #include "operations.h"
 #include <stdlib.h>
+#include <execinfo.h>
+#include <signal.h>
+#include <unistd.h>
 
-
+void segfault_handler(int sig);
 
 int main(int argc, char ** argv) {
+
+	signal(SIGSEGV, segfault_handler);
 
 	esedArgs * args = esedParseArgs(argc, argv);
 
@@ -59,3 +64,15 @@ int main(int argc, char ** argv) {
 
 	return 0;
 }
+
+void segfault_handler(int sig) {
+	void * array[10];
+	size_t size;
+
+	size = backtrace(array, 10);
+
+	fprintf(stderr, "Error: signal %d:\n", sig);
+	backtrace_symbols_fd(array, size, STDERR_FILENO);
+	exit(1);
+}
+
