@@ -2,6 +2,8 @@
 SRC_FILES = $(wildcard *.c)
 OBJ_FILES = $(SRC_FILES:%.c=../obj/%.o)
 
+C_FLAGS = -std=c99
+
 all: dirs ../bin/esed
 
 dirs:
@@ -14,7 +16,7 @@ dirs:
 	
 $(OBJ_FILES): ../obj/%.o: %.c
 	@echo Compiling $<...
-	@gcc $< -c -o $@
+	@gcc $(C_FLAGS) $< -c -o $@
 
 clean:
 	@echo Cleaning...
