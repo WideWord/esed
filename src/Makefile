@@ -6,6 +6,7 @@ all: dirs ../bin/esed
 
 dirs:
 	@mkdir -p ../obj
+	@mkdir -p ../bin
 
 ../bin/esed: $(OBJ_FILES)
 	@echo Linking esed...
@@ -18,7 +19,7 @@ $(OBJ_FILES): ../obj/%.o: %.c
 clean:
 	@echo Cleaning...
 	@rm -rf ../obj
-	@rm ../bin/esed
+	@rm -f ../bin/esed
 
 install: ../bin/esed
 	@cp ../bin/esed /usr/local/bin
