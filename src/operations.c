@@ -3,9 +3,8 @@
 #include <string.h>
 
 void esedReplace(FILE * in, FILE * out, esedReplaceCommand * cmd) {
-//	fprintf(stderr, "Replace operation not implemented, from = '%s', to = '%s'\n", cmd->from, cmd->to);
     char currentChar;
-    char buffer[256];
+    char buffer[1024];
     
     int currFromIdx = 0;
     int currBufIdx = 0;
