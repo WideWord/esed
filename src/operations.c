@@ -12,7 +12,7 @@ void esedReplace(FILE * in, FILE * out, esedReplaceCommand * cmd) {
     while((currentChar = fgetc(in)) != EOF){
         if(currentChar == cmd->from[currFromIdx++]){
             buffer[currBufIdx++] = currentChar;
-            buffer[currBufIdx] = NULL;
+            buffer[currBufIdx] = 0;
             if(currBufIdx == strlen(cmd->from)){
                 fputs(cmd->to, out);
                 currBufIdx = 0;
