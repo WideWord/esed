@@ -1,8 +1,33 @@
 #include "operations.h"
 #include <stdio.h>
+#include <string.h>
 
 void esedReplace(FILE * in, FILE * out, esedReplaceCommand * cmd) {
-	fprintf(stderr, "Replace operation not implemented, from = '%s', to = '%s'\n", cmd->from, cmd->to);
+//	fprintf(stderr, "Replace operation not implemented, from = '%s', to = '%s'\n", cmd->from, cmd->to);
+    char currentChar;
+    char buffer[256];
+    
+    int currFromIdx = 0;
+    int currBufIdx = 0;
+    
+    while((currentChar = fgetc(in)) != EOF){
+        if(currentChar == cmd->from[currFromIdx++]){
+            buffer[currBufIdx++] = currentChar;
+            buffer[currBufIdx] = NULL;
+            if(currBufIdx == strlen(cmd->from)){
+                fprintf(out, "%s", cmd->to);
+                currBufIdx = 0;
+            }
+        }
+        else{
+            if(currBufIdx > 0){
+                fprintf(out, "%s", buffer);
+                currBufIdx = 0;
+            }
+            currFromIdx = 0;
+            fputc(currentChar, out);
+        }
+    }
 }
 
 void esedInsertLine(FILE * in, FILE * out, esedInsertLineCommand * cmd) {
