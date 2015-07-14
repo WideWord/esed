@@ -15,13 +15,13 @@ void esedReplace(FILE * in, FILE * out, esedReplaceCommand * cmd) {
             buffer[currBufIdx++] = currentChar;
             buffer[currBufIdx] = NULL;
             if(currBufIdx == strlen(cmd->from)){
-                fprintf(out, "%s", cmd->to);
+                fputs(cmd->to, out);
                 currBufIdx = 0;
             }
         }
         else{
             if(currBufIdx > 0){
-                fprintf(out, "%s", buffer);
+                fputs(buffer, out);
                 currBufIdx = 0;
             }
             currFromIdx = 0;
