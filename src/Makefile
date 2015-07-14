@@ -8,7 +8,7 @@ dirs:
 	@mkdir -p ../obj
 	@mkdir -p ../bin
 
-../bin/esed: $(OBJ_FILES)
+../bin/esed: $(OBJ_FILES) 
 	@echo Linking esed...
 	@gcc $(OBJ_FILES) -o $@
 	
@@ -21,5 +21,6 @@ clean:
 	@rm -rf ../obj
 	@rm -f ../bin/esed
 
-install: ../bin/esed
+install: dirs ../bin/esed
+	@echo Installing esed...
 	@cp ../bin/esed /usr/local/bin

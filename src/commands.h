@@ -15,6 +15,7 @@ typedef struct {
 typedef struct {
 	const char * inputFile;
 	const char * outputFile;
+	int helpInfoRequested;
 	esedCommand * command;
 } esedArgs;
 
