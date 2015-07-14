@@ -5,7 +5,4 @@ Usage: esed [-i input_file] [-o output_file] command
 
 Possible commands:
 replace <from> <to> - replaces one string with another
-insert <at_line> <string_to_insert> - inserts inputted string
 remove <line> - removes string with inputted number of a line
-insert-below <pattern> <string_to_insert> - inserts inputted string below other inputed as a pattern
-insert-above <pattern> <string_to_insert> - the same as previous one, but above

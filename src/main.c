@@ -19,10 +19,7 @@ int main(int argc, char ** argv) {
 		printf("Usage: esed [-i input_file] [-o output_file] command\n");
 		printf("\tcommand may be:\n");
 		printf("\t\treplace <from> <to>\n");
-		printf("\t\tinsert <at_line> <string_to_insert>\n");
 		printf("\t\tremove <line>\n");
-		printf("\t\tinsert-below <pattern> <string_to_insert>\n");
-		printf("\t\tinsert-above <pattern> <string_to_insert>\n");
 		exit(0);
 	}
 
