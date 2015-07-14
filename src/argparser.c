@@ -30,6 +30,7 @@ esedArgs * esedParseArgs(int argc, char ** argv) {
 	esedArgs * args = malloc(sizeof(esedArgs));
 	args->inputFile = NULL;
 	args->outputFile = NULL;
+	args->helpInfoRequested = 0;
 	args->command = NULL;
 
 	for (int i = 1; i < argc; ++i) {
@@ -37,6 +38,8 @@ esedArgs * esedParseArgs(int argc, char ** argv) {
 			ESED_ARGS_GET_STRING(args->inputFile, "Invalid args: file name expected after -i\n");
 		} else if (strcmp(argv[i], "-o") == 0) {
 			ESED_ARGS_GET_STRING(args->outputFile, "Invalid args: file name expected after -o\n");
+		} else if (strcmp(argv[i], "-h") == 0) {
+			args->helpInfoRequested = 1;
 		} else if (strcmp(argv[i], "replace") == 0) {
 			ESED_ARGS_COMMAND_GUARD
 			ESED_ARGS_GET_STRING(const char * from, "Invalid args: from to expected after replace\n");
