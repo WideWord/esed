@@ -15,26 +15,26 @@ void esedRemoveLine(FILE * in, FILE * out, esedRemoveLineCommand * cmd) {
 	char element;
 
 	//we go until extracting line
-	for (int i(0); i!=cmd->lineNumber-1; i++)
+	for (int i=0; i!=cmd->lineNumber-1; i++)
 	{
-		fgets (in, "%c", element);
-		for (int number_of_element(0); element!='\n'; number_of_element++)
+		fgets (element, 1, in);
+		for (int number_of_element=0; element!='\n'; number_of_element++)
 			fprintf (out, "%c",element);
-			fgets (in, "%c", element);
+			fgets (element, 1, in);
 		fprintf (out, "\n");
 	}
 
 	//we "miss" extracting line
-	fgets (in, "%c", element);
-	for (int number_of_element(0); element!='\n'; number_of_element++)
-		fgets (in, "%c", element);
+	fgets (element, 1, in);
+	for (int number_of_element=0; element!='\n'; number_of_element++)
+		fgets (element, 1, in);
 
 	//we go until EOF
-	fgets (in, "%c", element);
+	fgets (element, 1, in);
 	while (element!=EOF)
 	{
 		fprintf (out, "%c", element);
-		fgets (in, "%c", element);
+		fgets (element, 1, in);
 	}
 }
 
