@@ -37,7 +37,7 @@ esedArgs * esedParseArgs(int argc, char ** argv) {
 			ESED_ARGS_GET_STRING(args->inputFile, "Invalid args: file name expected after -i\n");
 		} else if (strcmp(argv[i], "-o") == 0) {
 			ESED_ARGS_GET_STRING(args->outputFile, "Invalid args: file name expected after -o\n");
-		} else if (strcmp(argv[i], "--replace") == 0) {
+		} else if (strcmp(argv[i], "replace") == 0) {
 			ESED_ARGS_COMMAND_GUARD
 			ESED_ARGS_GET_STRING(const char * from, "Invalid args: from to expected after --replace\n");
 			ESED_ARGS_GET_STRING(const char * to, "Invalid args: from to expected after --replace\n");
@@ -48,7 +48,7 @@ esedArgs * esedParseArgs(int argc, char ** argv) {
 			command->command.type = ESED_COMMAND_REPLACE;
 
 			args->command = (esedCommand *)command;
-		} else if (strcmp(argv[i], "--insert") == 0) {
+		} else if (strcmp(argv[i], "insert") == 0) {
 			ESED_ARGS_COMMAND_GUARD
 			ESED_ARGS_GET_INT(int lineNumber, "Invalid args: line number and string expected after --insert\n");
 			ESED_ARGS_GET_STRING(const char * string, "Invalid args: line number and string expected after --insert\n")
@@ -59,7 +59,7 @@ esedArgs * esedParseArgs(int argc, char ** argv) {
 			command->command.type = ESED_COMMAND_INSERT_LINE;
 
 			args->command = (esedCommand *)command;
-		} else if (strcmp(argv[i], "--remove") == 0) {
+		} else if (strcmp(argv[i], "remove") == 0) {
 			ESED_ARGS_COMMAND_GUARD
 			ESED_ARGS_GET_INT(int lineNumber, "Invalid args: line number expected after --remove\n");
 
@@ -68,7 +68,7 @@ esedArgs * esedParseArgs(int argc, char ** argv) {
 			command->command.type = ESED_COMMAND_REMOVE_LINE;
 
 			args->command = (esedCommand *)command;
-		} else if (strcmp(argv[i], "--insert-above") == 0) {
+		} else if (strcmp(argv[i], "insert-above") == 0) {
 			ESED_ARGS_COMMAND_GUARD
 			ESED_ARGS_GET_STRING(const char * pattern, "Invalid args: pattern and string expected after --insert-above\n");
 			ESED_ARGS_GET_STRING(const char * string, "Invalid args: pattern and string expected after --insert-above\n");
@@ -80,7 +80,7 @@ esedArgs * esedParseArgs(int argc, char ** argv) {
 			command->command.type = ESED_COMMAND_INSERT_LINE_NEAR_PATTERN;
 
 			args->command = (esedCommand *)command;
-		} else if (strcmp(argv[i], "--insert-below") == 0) {
+		} else if (strcmp(argv[i], "insert-below") == 0) {
 			ESED_ARGS_COMMAND_GUARD
 			ESED_ARGS_GET_STRING(const char * pattern, "Invalid args: pattern and string expected after --insert-below\n");
 			ESED_ARGS_GET_STRING(const char * string, "Invalid args: pattern and string expected after --insert-below\n");
