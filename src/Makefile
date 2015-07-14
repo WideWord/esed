@@ -2,7 +2,7 @@
 SRC_FILES = $(wildcard *.c)
 OBJ_FILES = $(SRC_FILES:%.c=../obj/%.o)
 
-C_FLAGS = -std=c99
+C_FLAGS = -std=c99 -g
 
 all: dirs ../bin/esed
 
