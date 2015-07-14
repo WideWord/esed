@@ -35,7 +35,34 @@ void esedInsertLine(FILE * in, FILE * out, esedInsertLineCommand * cmd) {
 }
 
 void esedRemoveLine(FILE * in, FILE * out, esedRemoveLineCommand * cmd) {
-	fprintf(stderr, "Remove operation not implemented, lineNumber = '%d'\n", cmd->lineNumber);
+	//fprintf(stderr, "Remove operation not implemented, lineNumber = '%d'\n", cmd->lineNumber);
+ 	
+	char buffer[512];
+	int lineCtr = 1;
+	int lineToRemove = cmd->lineNumber;
+
+	for (;;) {
+		size_t readedSize = fread(buffer, 1, sizeof(buffer), in);
+
+		if (readedSize == 0) break;
+
+		int lineBegin = 0;
+
+		for (int i = 0; i < readedSize; ++i) {
+			if (buffer[i] == '\n') {
+				if (lineCtr != lineToRemove) {
+					fwrite(buffer + lineBegin, 1, i - lineBegin + 1, out);
+				}
+				lineBegin = i + 1;
+				lineCtr++;
+			}
+		}
+
+		if (lineBegin != readedSize && lineCtr != lineToRemove) {
+			fwrite(buffer + lineBegin, 1, readedSize - lineBegin, out);
+		}
+
+	}
 }
 
 void esedInsertLineNearPattern(FILE * in, FILE * out, esedInsertLineNearPatternCommand * cmd) {
