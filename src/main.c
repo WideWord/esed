@@ -18,6 +18,10 @@ int main(int argc, char ** argv) {
 	FILE * in;
 	if (args->inputFile != NULL) {
 		in = fopen(args->inputFile, "r");
+		if (in == NULL) {
+			fprintf(stderr, "Input file '%s' does not exist\n", args->inputFile);
+			exit(1);
+		}
 	} else {
 		in = stdin;
 	}
