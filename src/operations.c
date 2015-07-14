@@ -16,6 +16,7 @@ void esedReplace(FILE * in, FILE * out, esedReplaceCommand * cmd) {
             if(currBufIdx == strlen(cmd->from)){
                 fputs(cmd->to, out);
                 currBufIdx = 0;
+                currFromIdx = 0;
             }
         }
         else{
