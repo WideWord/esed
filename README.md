@@ -14,7 +14,7 @@ Danil Gugunava
 Anastasia Kurkina
 Elizaveta Lebedeva
 Aleksei Glebov - (https://github.com/TetoFag-kun)
-Alina Kladieva
+Alina Kladieva - (https://github.com/AlineKl)
 Vlad Markin - (https://github.com/vlad-d-markin)
 Alexander Dydychkin - (https://github.com/GoAlexander)  (from group 14BI1)
 
