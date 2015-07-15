@@ -22,7 +22,7 @@ Our team:
 
 -Aleksei Glebov - (https://github.com/TetoFag-kun)
 
--Alina Kladieva
+-Alina Kladieva -(https://github.com/AlineKl)
 
 -Vlad Markin - (https://github.com/vlad-d-markin)
 
@@ -32,4 +32,5 @@ Our team:
 
 
 TODO
+
 Dear developers! Do not forget to update our documentation!
