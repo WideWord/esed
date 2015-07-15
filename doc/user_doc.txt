@@ -1,0 +1,48 @@
++---------------------------------------+
+| User documentation for version 0.2.0. |
++---------------------------------------+
+
+This is the user documentation for esed.
+Here you can learn about all features and syntax of esed.
+
+
+
+
+What is esed?
+=============
+
+esed is clone of Unix-program sed. What is sed you can read for example here: https://en.wikipedia.org/wiki/Sed
+esed provides some rethink features and new syntax, written in C.
+
+
+
+
+Syntax of esed and modes:
+=========================
+
+esed has next syntax:
+esed [-i input_file] [-o output_file] command
+	Possible commands:
+		replace <from> <to> - replaces one string with another
+		insert <at_line> <string_to_insert> - inserts inputted string
+		remove <line_number> - removes string with inputted number of a line
+		insert-below <pattern> <string_to_insert> - inserts inputted string below other inputed as a pattern
+		insert-above <pattern> <string_to_insert> - the same as previous one, but above
+
+Example:
+$ esed -i oldfile.txt -o newfile.txt remove 1
+#This command removes the line number 1 (from top) from oldfile.txt and puts new text into  newfile.txt.
+
+esed can work not only with files! You can use interactive mode.
+Example:
+$ esed replace i h
+#Here you activate  interactive mode. Write your text!
+>hi!
+>hh!
+
+If you want to close the program press ctrl + D.
+
+You can open and create files NOT only in current directory.
+Example:
+$ esed -i oldfile.txt -o /home/user/Files/test/newfile.txt remove 1
+#This command opens oldfile .txt in current directory and creates newfile.txt in directory /home/user/Files/test/.
