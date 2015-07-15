@@ -39,7 +39,12 @@ void esedInsertLine(FILE * in, FILE * out, esedInsertLineCommand * cmd) {
 for (;;) {
 		size_t readedSize = fread(buffer, 1, sizeof(buffer), in);
 
-		if (readedSize == 0) break;
+		if (readedSize == 0)
+			if (lineToInsert > lineCtr) {
+				fputs(InsertedLine, out);
+				break;
+			}
+			else break;
 
 		int lineBegin = 0; 
 		int i;
@@ -50,8 +55,7 @@ for (;;) {
 						if (lineCtr != lineToInsert-1) {
 							fwrite(buffer + lineBegin, 1, i - lineBegin + 1, out);
 						}
-						else
-						{
+						else	{
 							fwrite(buffer + lineBegin, 1, i - lineBegin + 1, out);
 							fputs(InsertedLine, out);
 						}		
@@ -60,8 +64,7 @@ for (;;) {
 						if (lineCtr != lineToInsert) {
 							fwrite(buffer + lineBegin, 1, i - lineBegin + 1, out);
 						}
-						else
-						{
+						else	{
 							fputs(InsertedLine, out);
 							fwrite(buffer + lineBegin, 1, i - lineBegin + 1, out);
 							
