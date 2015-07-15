@@ -1,6 +1,8 @@
 #include "operations.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <memory.h>
 
 void esedReplace(FILE * in, FILE * out, esedReplaceCommand * cmd) {
     char currentChar;
@@ -34,17 +36,23 @@ void esedInsertLine(FILE * in, FILE * out, esedInsertLineCommand * cmd) {
 	char buffer[512];
 	int lineCtr = 1;
 	int lineToInsert = cmd->lineNumber;
-	char *InsertedLine = strcat(cmd->string, "\n");
+
+	char * InsertedLine = malloc((strlen(cmd->string) + 1) * sizeof(char));
+	strcpy(InsertedLine, cmd->string);
+	InsertedLine[strlen(InsertedLine)] = '\n';
 	
-for (;;) {
+	for (;;) {
 		size_t readedSize = fread(buffer, 1, sizeof(buffer), in);
 
-		if (readedSize == 0)
+		if (readedSize == 0) {
 			if (lineToInsert > lineCtr) {
 				fputs(InsertedLine, out);
 				break;
 			}
-			else break;
+			else {
+				break;
+			}
+		}
 
 		int lineBegin = 0; 
 		int i;
@@ -60,11 +68,11 @@ for (;;) {
 							fputs(InsertedLine, out);
 						}		
 					}
-					else  {
+					else {
 						if (lineCtr != lineToInsert) {
 							fwrite(buffer + lineBegin, 1, i - lineBegin + 1, out);
 						}
-						else	{
+						else {
 							fputs(InsertedLine, out);
 							fwrite(buffer + lineBegin, 1, i - lineBegin + 1, out);
 							
@@ -74,7 +82,7 @@ for (;;) {
 					lineCtr++;
 				}
 		}
-	}		
+	}	
 }
 
 void esedRemoveLine(FILE * in, FILE * out, esedRemoveLineCommand * cmd) {
