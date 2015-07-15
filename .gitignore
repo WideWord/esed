@@ -4,3 +4,4 @@ obj/*
 *.obj
 *.exe
 bin/esed
+tests/tmp
