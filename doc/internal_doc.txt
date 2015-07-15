@@ -40,7 +40,7 @@ Uninstall:
 ==========
 
 In directory /src you can find "Makefile", command:
-$ make uninstall
+$ sudo make uninstall
 # This command uninstall esed from your computer.
 
 
