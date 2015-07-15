@@ -1,0 +1,81 @@
++-------------------------------------------+
+| Internal documentation for version 0.2.0. |
++-------------------------------------------+
+
+This is the internal documentation for esed developers.
+Here you can learn about all features and architecture of esed.
+
+
+
+
+What is esed?
+=============
+
+esed is clone of Unix-program sed. What is sed you can read for example here: https://en.wikipedia.org/wiki/Sed
+esed provides some rethink features and new syntax, written in C.
+
+
+
+
+Syntax of esed and modes:
+=========================
+
+esed has next syntax:
+esed [-i input_file] [-o output_file] command
+	Possible commands:
+		replace <from> <to> - replaces one string with another
+		insert <at_line> <string_to_insert> - inserts inputted string
+		remove <line_number> - removes string with inputted number of a line
+		insert-below <pattern> <string_to_insert> - inserts inputted string below other inputed as a pattern
+		insert-above <pattern> <string_to_insert> - the same as previous one, but above
+
+Example:
+$ esed -i oldfile.txt -o newfile.txt remove 1
+#This command removes the line number 1 (from top) from oldfile.txt and puts new text into  newfile.txt.
+
+esed can work not only with files! You can use interactive mode.
+Example:
+$ esed replace i h
+#Here you activate  interactive mode. Write your text!
+>hi!
+>hh!
+
+If you want to close the program press ctrl + D.
+
+You can open and create files NOT only in current directory.
+Example:
+$ esed -i oldfile.txt -o /home/user/Files/test/newfile.txt remove 1
+#This command opens oldfile .txt in current directory and creates newfile.txt in directory /home/user/Files/test/.
+
+
+
+
+Architecture of esed (for developers):
+======================================
+
+Steps of work of program:
+
+1. The following line is inserted in esed: esed [-i input_file] [-o output_file] command
+
+2. In the main-function is the ArgsParser-function, which parses the inserted line. We get structured information, which contains:
+-text
+-streams (if we have not such line: “-i oldfile.txt -o newfile.txt”, the program activates  interactive mode)
+file mode: in = inputFile; out = outputFile;
+interactive mode: in = stdin; out = stdout;
+-command
+-arguments of command
+
+3. Then the program choose suitable function for execution of user-command.
+List of functions:
+	esedReplace	
+	esedInsertLine
+	esedRemoveLine
+	esedInsertLineNearPattern
+
+You can find bodies of these functions in operation.c.
+
+The algorithm transmits in these functions:
+stream in, stream out, command
+
+Example:
+esedReplace (FILE * in, FILE * out, esedInsertLineCommand * cmd)
