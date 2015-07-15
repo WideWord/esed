@@ -17,6 +17,35 @@ esed provides some rethink features and new syntax, written in C.
 
 
 
+Installation:
+=============
+
+First of all, download source code of esed (in Github) or clone:
+$ git clone https://github.com/WideWord/esed.git
+
+In directory /src you can find "Makefile", command:
+$ make && sudo make install
+# This command deploys source code and then install esed.
+
+To clean source directory of esed, command:
+$ make clean
+
+We provide esed for Linux and Mac OS.
+Tested in Mac OS and Ubuntu 14.04 amd64.
+
+
+
+
+Uninstall:
+==========
+
+In directory /src you can find "Makefile", command:
+$ make uninstall
+# This command uninstall esed from your computer.
+
+
+
+
 Syntax of esed and modes:
 =========================
 
