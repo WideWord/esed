@@ -183,8 +183,9 @@ void esedInsertLineNearPattern(FILE * in, FILE * out, esedInsertLineNearPatternC
 			}
 			else{
 				fputs(str, out);
-				fputc('\n', out);
 				fputs(cmd->string, out);
+				fputc('\n', out);
+
 				}
 		}
 		else {fputs(str, out);}
