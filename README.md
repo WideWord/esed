@@ -17,9 +17,9 @@ Our team:
 
 -Danil Gugunava - (https://github.com/danilgugu)
 
--Anastasia Kurkina
+-Anastasia Kurkina - Quality Assistant - (https://github.com/Remedios8)
 
--Elizaveta Lebedeva
+-Elizaveta Lebedeva - (https://github.com/elizaveta202)
 
 -Aleksei Glebov - (https://github.com/TetoFag-kun)
 
