@@ -82,6 +82,9 @@ void esedInsertLine(FILE * in, FILE * out, esedInsertLineCommand * cmd) {
 					lineCtr++;
 				}
 		}
+        if (lineBegin != readedSize) {
+			fwrite(buffer + lineBegin, 1, readedSize - lineBegin, out);
+		}
 	}	
 }
 
