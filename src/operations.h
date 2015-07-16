@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "commands.h"
 
+/* Common declaration of operation implemetations */
 typedef void (*esedOperation)(FILE * in, FILE * out, esedCommand * cmd);
 
 void esedReplace(FILE * in, FILE * out, esedReplaceCommand * cmd);

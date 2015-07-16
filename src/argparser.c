@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* String argument macro */
 #define ESED_ARGS_GET_STRING(Var, ErrorMsg) \
 	++i; \
 	if (i == argc) { \
@@ -11,6 +12,7 @@
 	} \
 	Var = argv[i];
 
+/* Int argument macro */
 #define ESED_ARGS_GET_INT(Var, ErrorMsg) \
 	++i; \
 	if (i == argc) { \
@@ -19,6 +21,7 @@
 	} \
 	Var = atoi(argv[i]);
 
+/* Protection for two or more commands in arguments */
 #define ESED_ARGS_COMMAND_GUARD \
 	if (args->command != NULL) { \
 		fprintf(stderr, "You can specify only one command\n"); \

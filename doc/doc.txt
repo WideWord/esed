@@ -1,8 +1,0 @@
-ESED editor - analogue of famous sed editor
-
-Usage: esed [-i input_file] [-o output_file] command
-
-
-Possible commands:
-replace <from> <to> - replaces one string with another
-remove <line> - removes string with inputted number of a line
