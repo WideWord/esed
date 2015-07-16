@@ -17,7 +17,7 @@ Our team:
 
 -Danil Gugunava - (https://github.com/danilgugu)
 
--Anastasia Kurkina - Quality Assistant - (https://github.com/Remedios8)
+-Anastasia Kurkina - Quality Assurance - (https://github.com/Remedios8)
 
 -Elizaveta Lebedeva - (https://github.com/elizaveta202)
 
