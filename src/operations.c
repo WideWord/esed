@@ -38,8 +38,9 @@ void esedRemoveLine(FILE * in, FILE * out, esedRemoveLineCommand * cmd) {
 	fprintf(stderr, "Remove operation not implemented, lineNumber = '%d'\n", cmd->lineNumber);
 }
 
+int esedTestStringWithPatternSearchChar(char * string, const char * pat, int strnum, int patnum);
 
-int search_star(char * string, const char * pat, int strnum, int starnum){
+int esedTestStringWithPatternSearchStar(char * string, const char * pat, int strnum, int starnum){
 	int status = 0;
 	int found_letter = 0;
 	if(starnum == strlen(pat) - 1){
@@ -51,7 +52,7 @@ int search_star(char * string, const char * pat, int strnum, int starnum){
 	}
 	if(pat[starnum + 1] == string[strnum] || pat[starnum + 1] == '?'){
 		found_letter = 1;
-		status =  search_char(string, pat, strnum, starnum + 1);
+		status =  esedTestStringWithPatternSearchChar(string, pat, strnum, starnum + 1);
 		if(status == 1){
 			return status;
 		}
@@ -62,7 +63,7 @@ int search_star(char * string, const char * pat, int strnum, int starnum){
 }
 
 
-int search_char(char * string, const char * pat, int strnum, int patnum){
+int esedTestStringWithPatternSearchChar(char * string, const char * pat, int strnum, int patnum) {
 	while(string[strnum] != '\n'){
 		if(string[strnum] == pat[patnum] || pat[patnum] == '?'){        
 			if((patnum == strlen(pat) - 1) && (strlen(string) - 2 > strnum)){ //check for the end of pattern
@@ -72,7 +73,7 @@ int search_char(char * string, const char * pat, int strnum, int patnum){
 			patnum++;
 		}
 		else if(pat[patnum] == '*'){
-			return search_star(string, pat, strnum, patnum);
+			return esedTestStringWithPatternSearchStar(string, pat, strnum, patnum);
 		}
 		else return 0;
 	}
@@ -85,17 +86,17 @@ int search_char(char * string, const char * pat, int strnum, int patnum){
 }
 
 
-int pattern_search(char * string, const char * pat){
-		int status = search_char(string, pat, 0, 0);
-		return status;
+int esedTestStringWithPattern(const char * pattern, char * string) {
+	int status = esedTestStringWithPatternSearchChar(string, pattern, 0, 0);
+	return status;
 }
 
 void esedInsertLineNearPattern(FILE * in, FILE * out, esedInsertLineNearPatternCommand * cmd) {
 	char str[1024];
 	int status = 0; // 1 - found pattern, 0 - not
-	do{
+	do {
 		fgets(str,1024,in);
-		status = pattern_search(str, cmd->pattern);
+		status = esedTestStringWithPattern(cmd->pattern, str);
 		if(status == 1){
 			if(cmd->below == 0){
 				fputs(cmd->string, out);
@@ -109,6 +110,6 @@ void esedInsertLineNearPattern(FILE * in, FILE * out, esedInsertLineNearPatternC
 				}
 		}
 		else {fputs(str, out);}
-	}while(!feof(in));
+	} while(!feof(in));
 
 }
