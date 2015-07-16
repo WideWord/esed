@@ -121,6 +121,9 @@ int esedTestStringWithPatternSearchChar(char * string, const char * pat, int str
 int esedTestStringWithPatternSearchStar(char * string, const char * pat, int strnum, int starnum){
 	int status = 0;
 	int found_letter = 0;
+	if(pat[starnum+1]=='*'){
+		starnum++;
+	}
 	if(starnum == strlen(pat) - 1){
 		return 1;
 	}
@@ -158,9 +161,12 @@ int esedTestStringWithPatternSearchChar(char * string, const char * pat, int str
 	if(patnum == strlen(pat)){
 		return 1;
 	}
-	else{
-		return 0;
+	else for(int i = patnum; i < strlen(pat); i++){ // 
+		if(pat[i] != '*'){ //
+			return 0; //
+		}
 	}
+	return 1;
 }
 
 
