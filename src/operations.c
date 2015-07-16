@@ -116,6 +116,78 @@ void esedRemoveLine(FILE * in, FILE * out, esedRemoveLineCommand * cmd) {
 	}
 }
 
+int esedTestStringWithPatternSearchChar(char * string, const char * pat, int strnum, int patnum);
+
+int esedTestStringWithPatternSearchStar(char * string, const char * pat, int strnum, int starnum){
+	int status = 0;
+	int found_letter = 0;
+	if(starnum == strlen(pat) - 1){
+		return 1;
+	}
+	while(string[strnum] != '\n'){
+	if(pat[starnum+1]=='*'){
+		starnum++;
+	}
+	if(pat[starnum + 1] == string[strnum] || pat[starnum + 1] == '?'){
+		found_letter = 1;
+		status =  esedTestStringWithPatternSearchChar(string, pat, strnum, starnum + 1);
+		if(status == 1){
+			return status;
+		}
+	}
+	strnum++;
+}
+	return 0;
+}
+
+
+int esedTestStringWithPatternSearchChar(char * string, const char * pat, int strnum, int patnum) {
+	while(string[strnum] != '\n'){
+		if(string[strnum] == pat[patnum] || pat[patnum] == '?'){        
+			if((patnum == strlen(pat) - 1) && (strlen(string) - 2 > strnum)){ //check for the end of pattern
+				return 0;
+			}
+			strnum++;
+			patnum++;
+		}
+		else if(pat[patnum] == '*'){
+			return esedTestStringWithPatternSearchStar(string, pat, strnum, patnum);
+		}
+		else return 0;
+	}
+	if(patnum == strlen(pat)){
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
+
+
+int esedTestStringWithPattern(const char * pattern, char * string) {
+	int status = esedTestStringWithPatternSearchChar(string, pattern, 0, 0);
+	return status;
+}
+
 void esedInsertLineNearPattern(FILE * in, FILE * out, esedInsertLineNearPatternCommand * cmd) {
-	fprintf(stderr, "Insert near pattern operation not implemented, pattern = '%s', string = '%s', below = '%d'\n", cmd->pattern, cmd->string, cmd->below);
+	char str[1024];
+	int status = 0; // 1 - found pattern, 0 - not
+	do {
+		fgets(str,1024,in);
+		status = esedTestStringWithPattern(cmd->pattern, str);
+		if(status == 1){
+			if(cmd->below == 0){
+				fputs(cmd->string, out);
+				fputc('\n', out);
+				fputs(str, out);
+			}
+			else{
+				fputs(str, out);
+				fputc('\n', out);
+				fputs(cmd->string, out);
+				}
+		}
+		else {fputs(str, out);}
+	} while(!feof(in));
+
 }
