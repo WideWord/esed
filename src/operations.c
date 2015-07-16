@@ -178,23 +178,24 @@ int esedTestStringWithPattern(const char * pattern, char * string) {
 void esedInsertLineNearPattern(FILE * in, FILE * out, esedInsertLineNearPatternCommand * cmd) {
 	char str[1024];
 	int status = 0; // 1 - found pattern, 0 - not
-	do {
+	for(;;) {
 		fgets(str,1024,in);
+        if (feof(in)) break;
 		status = esedTestStringWithPattern(cmd->pattern, str);
-		if(status == 1){
-			if(cmd->below == 0){
+		if (status == 1){
+			if (cmd->below == 0){
 				fputs(cmd->string, out);
 				fputc('\n', out);
 				fputs(str, out);
-			}
-			else{
+			} else {
 				fputs(str, out);
 				fputs(cmd->string, out);
 				fputc('\n', out);
 
-				}
-		}
-		else {fputs(str, out);}
-	} while(!feof(in));
+            }
+		} else {
+            fputs(str, out);
+        }
+	} 
 
 }
