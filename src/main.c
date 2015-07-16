@@ -11,6 +11,7 @@ void segfault_handler(int sig);
 
 int main(int argc, char ** argv) {
 
+    /* Catching segfaults */
 	signal(SIGSEGV, segfault_handler);
 
 	esedArgs * args = esedParseArgs(argc, argv);
@@ -49,6 +50,7 @@ int main(int argc, char ** argv) {
 		out = stdout;
 	}
 
+    /* Operation types described in src/operations.h */
 	esedOperation operations[] = {
 		NULL,
 		(esedOperation)esedReplace,
@@ -65,7 +67,9 @@ int main(int argc, char ** argv) {
 	return 0;
 }
 
+/* Segfault handler */
 void segfault_handler(int sig) {
+    /* Printing stack trace */
 	void * array[10];
 	size_t size;
 
