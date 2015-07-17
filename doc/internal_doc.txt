@@ -1,5 +1,5 @@
 +-------------------------------------------+
-| Internal documentation for version 0.2.0. |
+| Internal documentation for version 0.3.0. |
 +-------------------------------------------+
 
 This is the internal documentation for esed developers.
