@@ -30,6 +30,9 @@ Our team:
 -Alexander Dydychkin - (https://github.com/GoAlexander)  (from group 14BI1)
 
 
+__For developers:__
+ + _master_ branch is for releases
+ + _dev_ branch is for bug fixes
 
 
 TODO
