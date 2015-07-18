@@ -14,8 +14,10 @@ int main(int argc, char ** argv) {
     /* Catching segfaults */
 	signal(SIGSEGV, segfault_handler);
 
+	/* Parsing arguments */
 	esedArgs * args = esedParseArgs(argc, argv);
 
+	/* In program help */
 	if (args->helpInfoRequested) {
 		printf("Usage: esed [-i input_file] [-o output_file] command\n");
 		printf("\tcommand may be:\n");
@@ -32,6 +34,7 @@ int main(int argc, char ** argv) {
 		exit(1);
 	}
 
+	/* Open input file */
 	FILE * in;
 	if (args->inputFile != NULL) {
 		in = fopen(args->inputFile, "r");
@@ -43,6 +46,7 @@ int main(int argc, char ** argv) {
 		in = stdin;
 	}
 
+	/* Open output file */
 	FILE * out;
 	if (args->outputFile != NULL) {
 		out = fopen(args->outputFile, "w");
@@ -62,6 +66,7 @@ int main(int argc, char ** argv) {
 	esedOperation operation = operations[args->command->type];
 	operation(in, out, args->command);
 
+	/* Free memory */
 	esedFreeArgs(args); 
 
 	return 0;
