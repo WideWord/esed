@@ -18,8 +18,11 @@ int main(int argc, char ** argv) {
         
         
         // Set up signal catching
-        setHandlers();
-
+        if(setHandlers() == SIG_ERR){
+            fprintf(stderr, "Error occured while setting up signal handlers. \n");
+            exit(EXIT_FAILURE);
+        }
+        
         esedArgs * args = esedParseArgs(argc, argv);
         
 	if (args->helpInfoRequested) {
@@ -67,8 +70,6 @@ int main(int argc, char ** argv) {
 
 	esedOperation operation = operations[args->command->type];
 	operation(in, out, args->command);
-        
-        sleep(100000);
 
 	esedFreeArgs(args); 
 
