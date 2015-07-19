@@ -637,4 +637,5 @@ dcGfdGdfGd
 20 passed, 0 failed tests.
 
 Signals
-When the program performs some action with large files, we checked its behavior on the inputs ctrl+c and ctrl+z. The program stops its action at that moment.
+When the program performs some action with large files, we checked its behavior on the inputs ctrl+c and ctrl+z.
+The program stops its action at that moment.
