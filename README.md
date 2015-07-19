@@ -8,10 +8,7 @@ esed provides some rethink features of sed and new syntax, written in C.
 This project is in progress as part of university practice.
 
 
-
-
-
-Our team:
+#####Our team:
 
 -Kirill Vilkov - Team Leader - (https://github.com/WideWord)
 
@@ -34,7 +31,5 @@ __For developers:__
  + _master_ branch is for releases
  + _dev_ branch is for bug fixes
 
-
-TODO
 
 Dear developers! Do not forget to update our documentation!

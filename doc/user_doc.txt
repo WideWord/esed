@@ -1,5 +1,5 @@
 +---------------------------------------+
-| User documentation for version 0.2.0. |
+| User documentation for version 0.3.0. |
 +---------------------------------------+
 
 This is the user documentation for esed.
@@ -23,7 +23,7 @@ Installation:
 First of all, download source code of esed (in Github) or clone:
 $ git clone https://github.com/WideWord/esed.git
 
-In directory /src you can find "Makefile", command:
+In directory esed/src you can find "Makefile", command:
 $ make && sudo make install
 # This command deploys source code and then install esed.
 
@@ -39,7 +39,7 @@ Tested in Mac OS and Ubuntu 14.04 amd64.
 Uninstall:
 ==========
 
-In directory /src you can find "Makefile", command:
+In directory esed/src you can find "Makefile", command:
 $ sudo make uninstall
 # This command uninstall esed from your computer.
 

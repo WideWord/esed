@@ -1,0 +1,467 @@
+Test compilation.test.sh
+-----------------------------
+Program compilation
+
+Program does compile
++----+
+|PASS|
++----+
+=============================
+Test insert1.test.sh
+-----------------------------
+Insert test 1
+
+Input:
+vvds
+vaefef
+wafwefweaf
+wefwfw
+Command: esed insert 1 aabb
+
+Output must be:
+aabb
+vvds
+vaefef
+wafwefweaf
+wefwfw
+
+Outbut is:
+aabb
+vvds
+vaefef
+wafwefweaf
+wefwfw
++----+
+|PASS|
++----+
+=============================
+Test insert2.test.sh
+-----------------------------
+Insert test 2
+
+Input:
+vvds
+vaefef
+wafwefweaf
+wefwfw
+
+Command: esed insert 1 aabb
+
+Output must be:
+aabb
+vvds
+vaefef
+wafwefweaf
+wefwfw
+
+
+Outbut is:
+aabb
+vvds
+vaefef
+wafwefweaf
+wefwfw
+
++----+
+|PASS|
++----+
+=============================
+Test insert3.test.sh
+-----------------------------
+Insert test 3
+
+Input:
+ewfmew f
+wefwef
+few fwefwe
+ew fwef ef
+w efewfwef
+
+Command: esed insert 2 ghghgh
+
+Output must be:
+ewfmew f
+ghghgh
+wefwef
+few fwefwe
+ew fwef ef
+w efewfwef
+
+
+Outbut is:
+ewfmew f
+ghghgh
+wefwef
+few fwefwe
+ew fwef ef
+w efewfwef
+
++----+
+|PASS|
++----+
+=============================
+Test insert-pattern1.test.sh
+-----------------------------
+Insert near pattern test 1
+
+Input:
+acd
+awdpokw
+wefpoakw
+acd
+addddfff
+
+Command: esed insert-above acd 1234
+
+Output must be:
+1234
+acd
+awdpokw
+wefpoakw
+1234
+acd
+addddfff
+
+
+Outbut is:
+1234
+acd
+awdpokw
+wefpoakw
+1234
+acd
+addddfff
+
++----+
+|PASS|
++----+
+=============================
+Test insert-pattern2.test.sh
+-----------------------------
+Insert near pattern test 2
+
+Input:
+awdawf
+wefefwe
+afefd
+pwogfkwergpor
+erkgpergk
+regoprk
+ad
+gpoerk
+
+Command: esed insert-below 'a*d' 5678
+
+Output must be:
+awdawf
+wefefwe
+afefd
+5678
+pwogfkwergpor
+erkgpergk
+regoprk
+ad
+5678
+gpoerk
+
+
+Output is:
+awdawf
+wefefwe
+afefd
+5678
+pwogfkwergpor
+erkgpergk
+regoprk
+ad
+5678
+gpoerk
+
++----+
+|PASS|
++----+
+=============================
+Test remove1.test.sh
+-----------------------------
+Removing line test 1
+
+Input:
+efelmreglker g
+gerg er gerg re
+ gerger
+ greger
+ grgtrhtrh
+ erhrthrthrtherthrt
+ hrteh
+ rthrth
+ rtehrthrtehrth
+ 
+Command: esed remove 1
+
+Output must be:
+gerg er gerg re
+ gerger
+ greger
+ grgtrhtrh
+ erhrthrthrtherthrt
+ hrteh
+ rthrth
+ rtehrthrtehrth
+ 
+
+Outbut is:
+gerg er gerg re
+ gerger
+ greger
+ grgtrhtrh
+ erhrthrthrtherthrt
+ hrteh
+ rthrth
+ rtehrthrtehrth
+ 
++----+
+|PASS|
++----+
+=============================
+Test remove2.test.sh
+-----------------------------
+Removing line test 2
+
+Input:
+abcd
+efgh
+1234
+
+Command: esed remove 2
+
+Output must be:
+abcd
+1234
+
+
+Outbut is:
+abcd
+1234
+
++----+
+|PASS|
++----+
+=============================
+Test remove3.test.sh
+-----------------------------
+Removing line test 3
+
+Input:
+efowefe
+wefwopekf
+wefefa
+
+Command: esed remove 5
+
+Output must be:
+efowefe
+wefwopekf
+wefefa
+
+
+Outbut is:
+efowefe
+wefwopekf
+wefefa
+
++----+
+|PASS|
++----+
+=============================
+Test replace1.test.sh
+-----------------------------
+Replace test 1
+
+Input:
+abcd
+
+Command: esed replace b f
+
+Output must be:
+afcd
+
+Outbut is:
+afcd
++----+
+|PASS|
++----+
+=============================
+Test replace2.test.sh
+-----------------------------
+Replace test 2
+
+Input:
+ababab
+
+Command: esed replace a f
+
+Output must be:
+fbfbfb
+
+Outbut is:
+fbfbfb
++----+
+|PASS|
++----+
+=============================
+Test replace3.test.sh
+-----------------------------
+Replace test 3
+
+Input:
+ababab
+
+Command: esed replace ab cd
+
+Output must be:
+cdcdcd
+
+Outbut is:
+cdcdcd
++----+
+|PASS|
++----+
+=============================
+Test replace4.test.sh
+-----------------------------
+Replace test 4
+
+Input:
+qwer tyui tyui ghjk
+
+Command: esed replace tyui ghjk
+
+Output must be:
+qwer ghjk ghjk ghjk
+
+Outbut is:
+qwer ghjk ghjk ghjk
++----+
+|PASS|
++----+
+=============================
+Test replace5.test.sh
+-----------------------------
+Replace test 5
+
+Input:
+efewfkmmklew f weklmeflkerf e feferf
+erfe krmferflk mrefelkrwmfewf lrfmerf;l erfm re;gkrewgr;knt
+retg rtgtrnegklrtgnrktengr tekgn rtkj gnrt gkrjt nrtek ngrktjg nrtkgj nrtekgjrtneg rlktgjrnt grte grtg 
+rtgrte grtg krtjgrtkjngrktegjnergkjrnt  kjn krtj gnrtkegjnrgkl jrtngrtkjg nrtekgj enrtgkjrtn grktj ntekg rt
+grtg regrkjngrtkjgntrkjgnerktrngkrtjgnrekgjnrgkrtgnrkt grtkgjnegk45gn4k54 ngkjntr;wkgjn tregkrtg nj
+tgtrgrn krtn rtkjgrelnlekgjntek jrtn kj nr krtj ntregkjrt ngektrjenrtgjkntr gkjtrngktjrgnrele kjgnretkjg ntr gkjtr gnrt
+t gertngreklgnrtlkrtj gntrkgjntrgkjrtengk jenr gkjntkrjg ntrkjgertnlg retjng lrg\rgre
+efewfkmmklew f  e feferfergerw elrn wlgnerlgknerglkwegnelrgkmewg;elgkerklgerngerlkgnerwglergnerlgenrglerkgnergerlgken
+erfe krmferflk mrefelkrwmfewf lrfmerf;l erfm re;gkrewgr;knt
+grtg  grtkgjnegk45gn4k54 ngkjntr;wkgjn  nj
+tgtrgrn krtn  jrtn kj nr krtj ntregkjrt ;ergjkntr gkjtrngktjrgnrele kjgnretkjg ntr gkjtr gnrt
+t gertngreklgnrtlkrtj gntrkgjntrgkjrtengk jenr gkjntkrjg ntrkjgertnlg retjng lrg\rgre
+refnrewo  ginwer gergerl ;kgelrkgn erglekrgn ergler
+efewfkmmklew f weklmeflkerf e feferf
+erfe krmferflk mrefelkrwmfewf lrfmerf;l erfm re;gkrewgr;knt
+retg rtgtrnegklrtgnrktengr tekgn rtkj gnrt gkrjt nrtek ngrktjg nrtkgj nrtekgjrtneg rlktgjrnt grte grtg 
+rtgrte grtg krtjgrtkjngrktegjnergkjrnt   krtj gnrtkegjnrgkl jrtngrtkjg nrtekgj enrtgkjrtn grktj ntekg rt
+grtg  grtkgjnegk45gn4k54 ngkjntr;wkgjn tregkrtg nj
+tgtrgrn krtn rtkjgrelnlekgjntek jrtn kj nr krtj   gkjtrngktjrgnrele  ntr gkjtr gnrt
+t gertngreklgnrtlkrtj gntrkgjntrgkjrtengk  gkjntkrjg ntrkjgertnlg retjng \rgre
+efewfkmmklew f weklmeflkerf e feferfklnkvf kegregkerglerkgmerlgkremgrelkgmrelkg
+erfe krmferflk mrefelkrwmfewf lrfmerf;l erfm re;gkrewgr;knt
+grtg regrkjngrtkjgntrkjgnerktrngkrtjgnrekgjnrgkrtgnrkt grtkgjnegk45gn4k54 ngkjntr;wkgjn tregkrtg nj
+tgtrgrn krtn  jrtn kj nr krtj ntregkjrt ;ergjkntr gkjtrngktjrgnrele ntr gkjtr gnrt
+t gertngreklgnrtlkrtj gntrkgjntrgkjrtengk jenr gkjntkrjg ntrkjgertnlg retjng lrg\rgre
+refnrewo ewroinero gin
+
+Command: esed replace elgkerklgerngerlkgnerwglergnerlgenrglerkgnergerlgken asdf
+
+Output must be:
+efewfkmmklew f weklmeflkerf e feferf
+erfe krmferflk mrefelkrwmfewf lrfmerf;l erfm re;gkrewgr;knt
+retg rtgtrnegklrtgnrktengr tekgn rtkj gnrt gkrjt nrtek ngrktjg nrtkgj nrtekgjrtneg rlktgjrnt grte grtg 
+rtgrte grtg krtjgrtkjngrktegjnergkjrnt  kjn krtj gnrtkegjnrgkl jrtngrtkjg nrtekgj enrtgkjrtn grktj ntekg rt
+grtg regrkjngrtkjgntrkjgnerktrngkrtjgnrekgjnrgkrtgnrkt grtkgjnegk45gn4k54 ngkjntr;wkgjn tregkrtg nj
+tgtrgrn krtn rtkjgrelnlekgjntek jrtn kj nr krtj ntregkjrt ngektrjenrtgjkntr gkjtrngktjrgnrele kjgnretkjg ntr gkjtr gnrt
+t gertngreklgnrtlkrtj gntrkgjntrgkjrtengk jenr gkjntkrjg ntrkjgertnlg retjng lrg\rgre
+efewfkmmklew f  e feferfergerw elrn wlgnerlgknerglkwegnelrgkmewg;asdf
+erfe krmferflk mrefelkrwmfewf lrfmerf;l erfm re;gkrewgr;knt
+grtg  grtkgjnegk45gn4k54 ngkjntr;wkgjn  nj
+tgtrgrn krtn  jrtn kj nr krtj ntregkjrt ;ergjkntr gkjtrngktjrgnrele kjgnretkjg ntr gkjtr gnrt
+t gertngreklgnrtlkrtj gntrkgjntrgkjrtengk jenr gkjntkrjg ntrkjgertnlg retjng lrg\rgre
+refnrewo  ginwer gergerl ;kgelrkgn erglekrgn ergler
+efewfkmmklew f weklmeflkerf e feferf
+erfe krmferflk mrefelkrwmfewf lrfmerf;l erfm re;gkrewgr;knt
+retg rtgtrnegklrtgnrktengr tekgn rtkj gnrt gkrjt nrtek ngrktjg nrtkgj nrtekgjrtneg rlktgjrnt grte grtg 
+rtgrte grtg krtjgrtkjngrktegjnergkjrnt   krtj gnrtkegjnrgkl jrtngrtkjg nrtekgj enrtgkjrtn grktj ntekg rt
+grtg  grtkgjnegk45gn4k54 ngkjntr;wkgjn tregkrtg nj
+tgtrgrn krtn rtkjgrelnlekgjntek jrtn kj nr krtj   gkjtrngktjrgnrele  ntr gkjtr gnrt
+t gertngreklgnrtlkrtj gntrkgjntrgkjrtengk  gkjntkrjg ntrkjgertnlg retjng \rgre
+efewfkmmklew f weklmeflkerf e feferfklnkvf kegregkerglerkgmerlgkremgrelkgmrelkg
+erfe krmferflk mrefelkrwmfewf lrfmerf;l erfm re;gkrewgr;knt
+grtg regrkjngrtkjgntrkjgnerktrngkrtjgnrekgjnrgkrtgnrkt grtkgjnegk45gn4k54 ngkjntr;wkgjn tregkrtg nj
+tgtrgrn krtn  jrtn kj nr krtj ntregkjrt ;ergjkntr gkjtrngktjrgnrele ntr gkjtr gnrt
+t gertngreklgnrtlkrtj gntrkgjntrgkjrtengk jenr gkjntkrjg ntrkjgertnlg retjng lrg\rgre
+refnrewo ewroinero gin
+
+
+Outbut is:
+efewfkmmklew f weklmeflkerf e feferf
+erfe krmferflk mrefelkrwmfewf lrfmerf;l erfm re;gkrewgr;knt
+retg rtgtrnegklrtgnrktengr tekgn rtkj gnrt gkrjt nrtek ngrktjg nrtkgj nrtekgjrtneg rlktgjrnt grte grtg 
+rtgrte grtg krtjgrtkjngrktegjnergkjrnt  kjn krtj gnrtkegjnrgkl jrtngrtkjg nrtekgj enrtgkjrtn grktj ntekg rt
+grtg regrkjngrtkjgntrkjgnerktrngkrtjgnrekgjnrgkrtgnrkt grtkgjnegk45gn4k54 ngkjntr;wkgjn tregkrtg nj
+tgtrgrn krtn rtkjgrelnlekgjntek jrtn kj nr krtj ntregkjrt ngektrjenrtgjkntr gkjtrngktjrgnrele kjgnretkjg ntr gkjtr gnrt
+t gertngreklgnrtlkrtj gntrkgjntrgkjrtengk jenr gkjntkrjg ntrkjgertnlg retjng lrg\rgre
+efewfkmmklew f  e feferfergerw elrn wlgnerlgknerglkwegnelrgkmewg;asdf
+erfe krmferflk mrefelkrwmfewf lrfmerf;l erfm re;gkrewgr;knt
+grtg  grtkgjnegk45gn4k54 ngkjntr;wkgjn  nj
+tgtrgrn krtn  jrtn kj nr krtj ntregkjrt ;ergjkntr gkjtrngktjrgnrele kjgnretkjg ntr gkjtr gnrt
+t gertngreklgnrtlkrtj gntrkgjntrgkjrtengk jenr gkjntkrjg ntrkjgertnlg retjng lrg\rgre
+refnrewo  ginwer gergerl ;kgelrkgn erglekrgn ergler
+efewfkmmklew f weklmeflkerf e feferf
+erfe krmferflk mrefelkrwmfewf lrfmerf;l erfm re;gkrewgr;knt
+retg rtgtrnegklrtgnrktengr tekgn rtkj gnrt gkrjt nrtek ngrktjg nrtkgj nrtekgjrtneg rlktgjrnt grte grtg 
+rtgrte grtg krtjgrtkjngrktegjnergkjrnt   krtj gnrtkegjnrgkl jrtngrtkjg nrtekgj enrtgkjrtn grktj ntekg rt
+grtg  grtkgjnegk45gn4k54 ngkjntr;wkgjn tregkrtg nj
+tgtrgrn krtn rtkjgrelnlekgjntek jrtn kj nr krtj   gkjtrngktjrgnrele  ntr gkjtr gnrt
+t gertngreklgnrtlkrtj gntrkgjntrgkjrtengk  gkjntkrjg ntrkjgertnlg retjng \rgre
+efewfkmmklew f weklmeflkerf e feferfklnkvf kegregkerglerkgmerlgkremgrelkgmrelkg
+erfe krmferflk mrefelkrwmfewf lrfmerf;l erfm re;gkrewgr;knt
+grtg regrkjngrtkjgntrkjgnerktrngkrtjgnrekgjnrgkrtgnrkt grtkgjnegk45gn4k54 ngkjntr;wkgjn tregkrtg nj
+tgtrgrn krtn  jrtn kj nr krtj ntregkjrt ;ergjkntr gkjtrngktjrgnrele ntr gkjtr gnrt
+t gertngreklgnrtlkrtj gntrkgjntrgkjrtengk jenr gkjntkrjg ntrkjgertnlg retjng lrg\rgre
+refnrewo ewroinero gin
+
++----+
+|PASS|
++----+
+=============================
+Test replace6.test.sh
+-----------------------------
+Replace test 6
+
+Input:
+eopskfnf38747yeut93
+$++T+RT+rtlfgk38jfdcm
+dcgfdgdfgd
+Command: esed replace g G
+
+Output must be:
+eopskfnf38747yeut93
+$++T+RT+rtlfGk38jfdcm
+dcGfdGdfGd
+
+Outbut is:
+eopskfnf38747yeut93
+$++T+RT+rtlfGk38jfdcm
+dcGfdGdfGd
++----+
+|PASS|
++----+
+=============================
+/////////////////////////////
+15 passed, 0 failed tests.
