@@ -108,3 +108,13 @@ stream in, stream out, command
 
 Example:
 esedReplace (FILE * in, FILE * out, esedInsertLineCommand * cmd)
+==================================
+UNIX signals:
+esed can handle particular signals and exit the program after handling them
+1.SIGINT ( initiated by pressing Ctrl+C)
+2.SIGTERM
+3.SIGTSPTP (Ctrl+Z)
+4.SIGQUIT
+5.SIGHUP
+6.SIGSEGV
+
