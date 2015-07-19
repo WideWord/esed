@@ -1,5 +1,5 @@
 +-------------------------------------------+
-| Internal documentation for version 0.3.0. |
+| Internal documentation for version 0.4.0. |
 +-------------------------------------------+
 
 This is the internal documentation for esed developers.
@@ -108,8 +108,12 @@ stream in, stream out, command
 
 Example:
 esedReplace (FILE * in, FILE * out, esedInsertLineCommand * cmd)
-==================================
+
+
+
+
 UNIX signals:
+=============
 esed can handle particular signals and exit the program after handling them
 1.SIGINT ( initiated by pressing Ctrl+C)
 2.SIGTERM
@@ -117,4 +121,3 @@ esed can handle particular signals and exit the program after handling them
 4.SIGQUIT
 5.SIGHUP
 6.SIGSEGV
-
