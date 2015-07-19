@@ -7,14 +7,24 @@
 #include <signal.h>
 #include <unistd.h>
 
+#include "sighandlers.h"
+
 void segfault_handler(int sig);
 
 int main(int argc, char ** argv) {
 
-	signal(SIGSEGV, segfault_handler);
-
-	esedArgs * args = esedParseArgs(argc, argv);
-
+    /* Catching segfaults */
+//	signal(SIGSEGV, segfault_handler);
+        
+        
+        // Set up signal catching
+        if(setHandlers() == SIG_ERR){
+            fprintf(stderr, "Error occured while setting up signal handlers. \n");
+            exit(EXIT_FAILURE);
+        }
+        
+        esedArgs * args = esedParseArgs(argc, argv);
+        
 	if (args->helpInfoRequested) {
 		printf("Usage: esed [-i input_file] [-o output_file] command\n");
 		printf("\tcommand may be:\n");
@@ -46,6 +56,7 @@ int main(int argc, char ** argv) {
 		out = stdout;
 	}
 
+    /* Operation types described in src/operations.h */
 	esedOperation operations[] = {
 		NULL,
 		(esedOperation)esedReplace,
@@ -62,7 +73,9 @@ int main(int argc, char ** argv) {
 	return 0;
 }
 
+/* Segfault handler */
 void segfault_handler(int sig) {
+    /* Printing stack trace */
 	void * array[10];
 	size_t size;
 
