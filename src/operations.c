@@ -4,6 +4,16 @@
 #include <stdlib.h>
 #include <memory.h>
 
+/*
+ * Description: esedReplace reads input stream FILE * in and replaces anything
+ *              that matches with cmd->from with cmd->to, then writes to 
+ *              output stream FILE * out.
+ * Receives: FILE * in - input stream
+ *           FILE * out - output stream
+ *           esedReplaceCommand * cmd - structure that contains string to replace
+ *                                      and string to replace with
+ * Returns: nothing
+ */
 void esedReplace(FILE * in, FILE * out, esedReplaceCommand * cmd) {
     char currentChar;
     char buffer[1024];
