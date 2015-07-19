@@ -21,13 +21,13 @@ $(OBJ_FILES): ../obj/%.o: %.c
 clean:
 	@echo Cleaning...
 	@rm -rf ../obj
-	@rm -f ../bin/esed && @echo esed directory successfully cleaned!
+	@rm -f ../bin/esed && echo esed directory successfully cleaned!
 	
 install: dirs ../bin/esed
 	@echo Installing esed...
-	@cp ../bin/esed /usr/local/bin && @echo esed successfully installed!
+	@cp ../bin/esed /usr/local/bin && echo esed successfully installed!
 	
 uninstall:
 	@echo Uninstalling esed...
-	@rm -f /usr/local/bin/esed && @echo esed successfully uninstalled!
+	@rm -f /usr/local/bin/esed && echo esed successfully uninstalled!
 	
