@@ -23,7 +23,7 @@ __sighandler_t setHandlers(){
     // Set handler for SIGINT, SIGTERM, SIGTSTP, SIGQUIT, SIGHUP
     SET_HANDLER(SIGINT,  exitHandler);
     SET_HANDLER(SIGTERM, exitHandler);
-    SET_HANDLER(SIGTSTP, exitHandler);
+    SET_HANDLER(SIGTSTP, SIG_DFL);
     SET_HANDLER(SIGQUIT, exitHandler);  
     SET_HANDLER(SIGHUP,  exitHandler);
     
@@ -31,7 +31,7 @@ __sighandler_t setHandlers(){
     SET_HANDLER(SIGSEGV, segfaultHandler);
     
     // Set handler for SIGPIPE
-    SET_HANDLER(SIGPIPE, sigpipeHandler);
+    SET_HANDLER(SIGPIPE, SIG_DFL);
     
     // Return success code
     return 0;

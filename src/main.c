@@ -6,6 +6,7 @@
 #include <execinfo.h>
 #include <signal.h>
 #include <unistd.h>
+#include <string.h>
 
 #include "sighandlers.h"
 
@@ -53,8 +54,12 @@ int main(int argc, char ** argv) {
 	}
 
 	FILE * out;
+        char tmpFilename[512];
 	if (args->outputFile != NULL) {
-		out = fopen(args->outputFile, "w");
+                // Open tmp file
+                strcpy(tmpFilename, args->outputFile);
+                strcat(tmpFilename, ".new");
+		out = fopen(tmpFilename, "w");
 	} else {
 		out = stdout;
 	}
@@ -72,6 +77,11 @@ int main(int argc, char ** argv) {
 	operation(in, out, args->command);
 
 	esedFreeArgs(args); 
+        
+        // Swap files
+        if(args->outputFile != NULL){
+            rename(tmpFilename, args->outputFile);
+        }
 
 	return 0;
 }
