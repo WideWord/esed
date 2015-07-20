@@ -26,7 +26,7 @@
  * Receives: nothing
  * Returnes: 0 if success, SIG_ERR if failure
  */
-__sighandler_t setHandlers();
+sig_t setHandlers();
 
 
 /*
