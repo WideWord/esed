@@ -6,19 +6,22 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 
 #define SET_HANDLER(Signal, Handler) \
     if(signal(Signal, Handler) == SIG_ERR) \
         return 0;
 
+char * tmpFname = NULL;
 
 /*
  * Description: this function sets up signal handlers
  * Receives: nothing
  * Returnes: 1 if success, 0 if failure
  */
-int setHandlers(){
+int setHandlers(char * tmpFile){
+    tmpFname = tmpFile;
     
     // Set handler for SIGINT, SIGTERM, SIGTSTP, SIGQUIT, SIGHUP
     SET_HANDLER(SIGINT,  exitHandler);
@@ -42,8 +45,11 @@ int setHandlers(){
  * Receives: sig - signal code
  * Returnes: nothing 
  */
-void exitHandler(int sig){    
-    fprintf(stderr, "Save files, exit... \n");     
+void exitHandler(int sig){
+    if(strlen(tmpFname) > 0)
+        fprintf(stderr, "Work is not done. Saving result to file '%s'. \n", tmpFname); // ?
+    else
+        fprintf(stderr, "Exiting esed... \n");
     exit(EXIT_SUCCESS);
 }
 

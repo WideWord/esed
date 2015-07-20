@@ -1,7 +1,5 @@
 
 #include <stdio.h>
-#include "argparser.h"
-#include "operations.h"
 #include <stdlib.h>
 #include <execinfo.h>
 #include <errno.h>
@@ -9,16 +7,16 @@
 #include <unistd.h>
 #include <string.h>
 
+#include "argparser.h"
+#include "operations.h"
 #include "sighandlers.h"
 
 #define TMPFNAMESUFFIX ".new"
-extern char * tmpFname;
 
-void segfault_handler(int sig);
-
-int main(int argc, char ** argv) {        
+int main(int argc, char ** argv) {
+        char tmpFilename[512] = "";
         // Set up signal catching
-        if(!setHandlers()){
+        if(!setHandlers(tmpFilename)){
             fprintf(stderr, "Error occured while setting up signal handlers. \n");
             exit(EXIT_FAILURE);
         }
@@ -54,14 +52,13 @@ int main(int argc, char ** argv) {
 	}
 
 	FILE * out;
-        char tmpFilename[512];
 	if (args->outputFile != NULL) {
                 // Open tmp file
                 strcpy(tmpFilename, args->outputFile);
                 strcat(tmpFilename, TMPFNAMESUFFIX);
-                tmpFname = tmpFilename;
 		out = fopen(tmpFilename, "w");
                 if(out == NULL){
+                    // Hanlde errors
                     fprintf(stderr, "Can't open output file '%s'.\n", tmpFilename);
                     perror("Error occured while opening output file");
                     exit(EXIT_FAILURE);
@@ -87,7 +84,7 @@ int main(int argc, char ** argv) {
         // Swap files
         if(args->outputFile != NULL){
             if(rename(tmpFilename, args->outputFile))
-                perror("Error occured while swapping output file with tmp file");
+                perror("Error occured while swapping tmp file with output file"); // Hanlde errors while swapping files
         }
 
 	return 0;
