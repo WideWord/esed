@@ -10,15 +10,15 @@
 
 #define SET_HANDLER(Signal, Handler) \
     if(signal(Signal, Handler) == SIG_ERR) \
-        return SIG_ERR;
+        return 0;
 
 
 /*
  * Description: this function sets up signal handlers
  * Receives: nothing
- * Returnes: 0 if success, SIG_ERR if failure
+ * Returnes: 1 if success, 0 if failure
  */
-__sighandler_t setHandlers(){
+int setHandlers(){
     
     // Set handler for SIGINT, SIGTERM, SIGTSTP, SIGQUIT, SIGHUP
     SET_HANDLER(SIGINT,  exitHandler);
@@ -34,7 +34,7 @@ __sighandler_t setHandlers(){
     SET_HANDLER(SIGPIPE, SIG_DFL);
     
     // Return success code
-    return 0;
+    return 1;
 }
 
 /*
