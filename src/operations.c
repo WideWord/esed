@@ -4,6 +4,28 @@
 #include <stdlib.h>
 #include <memory.h>
 
+int esedCountLinesInStream(FILE * stream) {
+	char buffer[1024];
+
+	int counter = 0;
+
+	while (1) {
+		size_t readedSize = fread(buffer, 1, sizeof(buffer), stream);
+		if (readedSize == 0) break;
+
+		for (int i = 0; i < readedSize; ++i) {
+			if (buffer[i] == '\n') {
+				counter += 1;
+			}
+		}
+	}
+
+	fseek(stream, 0, SEEK_SET);
+
+	return counter + 2;
+
+}
+
 /*
  * Description: esedReplace reads input stream FILE * in and replaces anything
  *              that matches with cmd->from with cmd->to, then writes to 
@@ -14,6 +36,7 @@
  *                                      and string to replace with
  * Returns: nothing
  */
+
 void esedReplace(FILE * in, FILE * out, esedReplaceCommand * cmd) {
     char currentChar;
     char buffer[1024];
@@ -46,6 +69,14 @@ void esedInsertLine(FILE * in, FILE * out, esedInsertLineCommand * cmd) {
 	char buffer[512];
 	int lineCtr = 1;
 	int lineToInsert = cmd->lineNumber;
+
+	if (lineToInsert < 0) {
+		lineToInsert += esedCountLinesInStream(in);
+		if (lineToInsert < 0) {
+			fprintf(stderr, "invalid line number");
+			exit(1);
+		}
+	}
 
 	char * InsertedLine = malloc((strlen(cmd->string) + 1) * sizeof(char));
 	strcpy(InsertedLine, cmd->string);
@@ -104,6 +135,14 @@ void esedRemoveLine(FILE * in, FILE * out, esedRemoveLineCommand * cmd) {
 	char buffer[512];
 	int lineCtr = 1;
 	int lineToRemove = cmd->lineNumber;
+
+	if (lineToRemove < 0) {
+		lineToRemove += esedCountLinesInStream(in);
+		if (lineToRemove < 0) {
+			fprintf(stderr, "invalid line number");
+			exit(1);
+		}
+	}
 
 	for (;;) {
 		size_t readedSize = fread(buffer, 1, sizeof(buffer), in);
