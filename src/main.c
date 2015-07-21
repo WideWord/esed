@@ -16,12 +16,13 @@ int main(int argc, char ** argv) {
     /* Catching segfaults */
 //	signal(SIGSEGV, segfault_handler);
         
-        
+    #ifndef __clang__
         // Set up signal catching
         if(setHandlers() == SIG_ERR){
             fprintf(stderr, "Error occured while setting up signal handlers. \n");
             exit(EXIT_FAILURE);
         }
+    #endif
         
         esedArgs * args = esedParseArgs(argc, argv);
         

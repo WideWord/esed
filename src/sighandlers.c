@@ -1,3 +1,5 @@
+#ifndef __clang__
+
 #include "sighandlers.h"
 
 #include <signal.h>
@@ -76,3 +78,5 @@ void sigpipeHandler(int sig){
     fprintf(stderr, "SIGPIPE catched.\n");
     exit(EXIT_FAILURE);
 }
+
+#endif

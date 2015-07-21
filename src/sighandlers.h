@@ -1,3 +1,5 @@
+#ifndef __clang__
+
 #pragma once
 #include <signal.h>
 #include <unistd.h>
@@ -51,3 +53,5 @@ void sigpipeHandler(int sig);
  * Returnes: nothing 
  */
 void segfaultHandler(int sig);
+
+#endif
