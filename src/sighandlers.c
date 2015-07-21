@@ -1,3 +1,5 @@
+#ifndef __clang__
+
 #include "sighandlers.h"
 
 #include <signal.h>
@@ -6,24 +8,27 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 
 #define SET_HANDLER(Signal, Handler) \
     if(signal(Signal, Handler) == SIG_ERR) \
-        return SIG_ERR;
+        return 0;
 
+char * tmpFname = NULL;
 
 /*
  * Description: this function sets up signal handlers
  * Receives: nothing
- * Returnes: 0 if success, SIG_ERR if failure
+ * Returnes: 1 if success, 0 if failure
  */
-__sighandler_t setHandlers(){
+int setHandlers(char * tmpFile){
+    tmpFname = tmpFile;
     
     // Set handler for SIGINT, SIGTERM, SIGTSTP, SIGQUIT, SIGHUP
     SET_HANDLER(SIGINT,  exitHandler);
     SET_HANDLER(SIGTERM, exitHandler);
-    SET_HANDLER(SIGTSTP, exitHandler);
+    SET_HANDLER(SIGTSTP, SIG_DFL);
     SET_HANDLER(SIGQUIT, exitHandler);  
     SET_HANDLER(SIGHUP,  exitHandler);
     
@@ -31,10 +36,10 @@ __sighandler_t setHandlers(){
     SET_HANDLER(SIGSEGV, segfaultHandler);
     
     // Set handler for SIGPIPE
-    SET_HANDLER(SIGPIPE, sigpipeHandler);
+    SET_HANDLER(SIGPIPE, SIG_DFL);
     
     // Return success code
-    return 0;
+    return 1;
 }
 
 /*
@@ -42,8 +47,11 @@ __sighandler_t setHandlers(){
  * Receives: sig - signal code
  * Returnes: nothing 
  */
-void exitHandler(int sig){    
-    fprintf(stderr, "Save files, exit... \n");     
+void exitHandler(int sig){
+    if(strlen(tmpFname) > 0)
+        fprintf(stderr, "Work is not done. Saving result to file '%s'. \n", tmpFname); // ?
+    else
+        fprintf(stderr, "Exiting esed... \n");
     exit(EXIT_SUCCESS);
 }
 
@@ -76,3 +84,5 @@ void sigpipeHandler(int sig){
     fprintf(stderr, "SIGPIPE catched.\n");
     exit(EXIT_FAILURE);
 }
+
+#endif

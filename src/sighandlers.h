@@ -1,3 +1,5 @@
+#ifndef __clang__
+
 #pragma once
 #include <signal.h>
 #include <unistd.h>
@@ -20,13 +22,12 @@
  *  
  */
 
-
 /*
  * Description: this function sets up signal handlers
  * Receives: nothing
- * Returnes: 0 if success, SIG_ERR if failure
+ * Returnes: 1 if success, 0 if failure
  */
-__sighandler_t setHandlers();
+int setHandlers(char * tmpFileName);
 
 
 /*
@@ -51,3 +52,5 @@ void sigpipeHandler(int sig);
  * Returnes: nothing 
  */
 void segfaultHandler(int sig);
+
+#endif

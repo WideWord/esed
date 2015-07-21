@@ -1,27 +1,29 @@
 
 #include <stdio.h>
-#include "argparser.h"
-#include "operations.h"
 #include <stdlib.h>
 #include <execinfo.h>
+#include <errno.h>
 #include <signal.h>
 #include <unistd.h>
+#include <string.h>
 
+#include "argparser.h"
+#include "operations.h"
 #include "sighandlers.h"
 
-void segfault_handler(int sig);
+#define TMPFNAMESUFFIX ".new"
 
 int main(int argc, char ** argv) {
 
-    /* Catching segfaults */
-//	signal(SIGSEGV, segfault_handler);
-        
-        
+        char tmpFilename[512] = "";
         // Set up signal catching
-        if(setHandlers() == SIG_ERR){
+
+    #ifndef __clang__
+        if(!setHandlers(tmpFilename)){
             fprintf(stderr, "Error occured while setting up signal handlers. \n");
             exit(EXIT_FAILURE);
         }
+    #endif
         
         esedArgs * args = esedParseArgs(argc, argv);
         
@@ -45,7 +47,8 @@ int main(int argc, char ** argv) {
 	if (args->inputFile != NULL) {
 		in = fopen(args->inputFile, "r");
 		if (in == NULL) {
-			fprintf(stderr, "Input file '%s' does not exist\n", args->inputFile);
+			fprintf(stderr, "Can't open input file '%s'.\n", args->inputFile);
+                        perror("Error occured while opening input file");
 			exit(1);
 		}
 	} else {
@@ -54,7 +57,16 @@ int main(int argc, char ** argv) {
 
 	FILE * out;
 	if (args->outputFile != NULL) {
-		out = fopen(args->outputFile, "w");
+                // Open tmp file
+                strcpy(tmpFilename, args->outputFile);
+                strcat(tmpFilename, TMPFNAMESUFFIX);
+		out = fopen(tmpFilename, "w");
+                if(out == NULL){
+                    // Hanlde errors
+                    fprintf(stderr, "Can't open output file '%s'.\n", tmpFilename);
+                    perror("Error occured while opening output file");
+                    exit(EXIT_FAILURE);
+                }
 	} else {
 		out = stdout;
 	}
@@ -72,19 +84,12 @@ int main(int argc, char ** argv) {
 	operation(in, out, args->command);
 
 	esedFreeArgs(args); 
+        
+        // Swap files
+        if(args->outputFile != NULL){
+            if(rename(tmpFilename, args->outputFile))
+                perror("Error occured while swapping tmp file with output file"); // Hanlde errors while swapping files
+        }
 
 	return 0;
-}
-
-/* Segfault handler */
-void segfault_handler(int sig) {
-    /* Printing stack trace */
-	void * array[10];
-	size_t size;
-
-	size = backtrace(array, 10);
-
-	fprintf(stderr, "Error: signal %d:\n", sig);
-	backtrace_symbols_fd(array, size, STDERR_FILENO);
-	exit(1);
 }

@@ -1,5 +1,5 @@
 +-------------------------------------------+
-| Internal documentation for version 0.3.0. |
+| Internal documentation for version 0.5.0. |
 +-------------------------------------------+
 
 This is the internal documentation for esed developers.
@@ -71,11 +71,22 @@ $ esed replace i h
 
 If you want to close the program press ctrl + D.
 
-You can open and create files NOT only in current directory.
+You can open and create files NOT only in the current directory.
 Example:
 $ esed -i oldfile.txt -o /home/user/Files/test/newfile.txt remove 1
 #This command opens oldfile .txt in current directory and creates newfile.txt in directory /home/user/Files/test/.
 
+There is support of pipes.
+Example:
+$ echo aaabbb | esed replace a b
+bbbbbb #output
+
+If you write negative line number, esed will count numbers from end of file.
+Example:
+$ esed -i oldfile.txt -o /home/user/Files/test/newfile.txt remove -1
+#This command deletes last line in the file newfile.txt.
+
+If you work with files, esed writes all changes to temporary file (called <name_of_file>.new). It is made to save your data.
 
 
 
@@ -108,8 +119,13 @@ stream in, stream out, command
 
 Example:
 esedReplace (FILE * in, FILE * out, esedInsertLineCommand * cmd)
-==================================
+
+
+
+
 UNIX signals:
+=============
+
 esed can handle particular signals and exit the program after handling them
 1.SIGINT ( initiated by pressing Ctrl+C)
 2.SIGTERM
