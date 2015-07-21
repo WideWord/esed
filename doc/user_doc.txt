@@ -1,5 +1,5 @@
 +---------------------------------------+
-| User documentation for version 0.2.0. |
+| User documentation for version 0.4.0. |
 +---------------------------------------+
 
 This is the user documentation for esed.
