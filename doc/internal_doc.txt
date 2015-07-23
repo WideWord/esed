@@ -145,25 +145,21 @@ The next lines are not bugs, it is feature of esed:
 
 
 $ esed -i file.in -o file.out insert 'k' hello
-#out:
-The first parameter must be the number.
+#out (nothing and no changes):
 
-
+-----------------------------------------------------------
 $ esed -i file.in -o file.out insert-below ffff 0
-#out:
-There is no line like you have written.
+#out (nothing and no changes):
 
-
+-----------------------------------------------------------
 $ esed remove -2
 #in:
 aaa
 bbb
 ccc
-#out:
-aaa
-ccc
+#out (nothing):
 
-
+-----------------------------------------------------------
 $ esed << END remove -1
 >12121
 >121211q
@@ -174,3 +170,4 @@ out:
 12121
 121211q
 3123
+2
