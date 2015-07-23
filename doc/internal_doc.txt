@@ -150,24 +150,3 @@ $ esed -i file.in -o file.out insert 'k' hello
 -----------------------------------------------------------
 $ esed -i file.in -o file.out insert-below ffff 0
 #out (nothing and no changes):
-
------------------------------------------------------------
-$ esed remove -2
-#in:
-aaa
-bbb
-ccc
-#out (nothing):
-
------------------------------------------------------------
-$ esed << END remove -1
->12121
->121211q
->3123
->2
->END
-out:
-12121
-121211q
-3123
-2
