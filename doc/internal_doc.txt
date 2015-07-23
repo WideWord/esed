@@ -134,3 +134,43 @@ esed can handle particular signals and exit the program after handling them
 4.SIGQUIT - (initiated by pressing Ctrl+\)
 5.SIGHUP - closing the terminal
 6.SIGSEGV - writting of back trace
+
+
+
+
+Some comments:
+==============
+
+The next lines are not bugs, it is feature of esed:
+
+
+$ esed -i file.in -o file.out insert 'k' hello
+#out:
+The first parameter must be the number.
+
+
+$ esed -i file.in -o file.out insert-below ffff 0
+#out:
+There is no line like you have written.
+
+
+$ esed remove -2
+#in:
+aaa
+bbb
+ccc
+#out:
+aaa
+ccc
+
+
+$ esed << END remove -1
+>12121
+>121211q
+>3123
+>2
+>END
+out:
+12121
+121211q
+3123
