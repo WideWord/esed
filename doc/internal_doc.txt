@@ -90,6 +90,7 @@ If you work with files, esed writes all changes to temporary file (called <name_
 
 
 
+
 Architecture of esed (for developers):
 ======================================
 
@@ -127,10 +128,9 @@ UNIX signals:
 =============
 
 esed can handle particular signals and exit the program after handling them
-1.SIGINT ( initiated by pressing Ctrl+C)
-2.SIGTERM
-3.SIGTSPTP (Ctrl+Z)
-4.SIGQUIT
-5.SIGHUP
-6.SIGSEGV
-
+1.SIGINT - (initiated by pressing Ctrl+C)
+2.SIGTERM - exiting from esed (using exit(); function)
+3.SIGTSPTP - (initiated by pressing Ctrl+Z)
+4.SIGQUIT - (initiated by pressing Ctrl+\)
+5.SIGHUP - closing the terminal
+6.SIGSEGV - writting of back trace
