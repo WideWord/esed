@@ -25,8 +25,8 @@ int main(int argc, char ** argv) {
         }
     #endif
         
-        esedArgs * args = esedParseArgs(argc, argv);
-        
+    esedArgs * args = esedParseArgs(argc, argv);
+     
 	if (args->helpInfoRequested) {
         printf("Usage: esed [-i input_file] [-o output_file] command\n");
 		printf("\tcommand may be:\n");
@@ -43,6 +43,7 @@ int main(int argc, char ** argv) {
 		exit(1);
 	}
 
+	/* Open input file */
 	FILE * in;
 	if (args->inputFile != NULL) {
 		in = fopen(args->inputFile, "r");
@@ -55,6 +56,7 @@ int main(int argc, char ** argv) {
 		in = stdin;
 	}
 
+	/* Open output file */
 	FILE * out;
 	if (args->outputFile != NULL) {
                 // Open tmp file
@@ -83,6 +85,7 @@ int main(int argc, char ** argv) {
 	esedOperation operation = operations[args->command->type];
 	operation(in, out, args->command);
 
+	/* Free memory */
 	esedFreeArgs(args); 
         
         // Swap files
